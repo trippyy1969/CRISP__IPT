@@ -74,7 +74,7 @@ def schedule_interviews(
 
     panel_usage = {}
 
-    # Create panel calendars
+    # create panel calendars
     for company, details in companies.items():
 
         panel_usage[company] = {}
@@ -86,14 +86,15 @@ def schedule_interviews(
 
             panel_usage[company][panel] = []
 
-    # Schedule interviews
+    # -------------------------
+    # Create interview queue
+    # -------------------------
+
+    pending = []
+
     for student, company_list in students.items():
 
-        previous_end = slot_start
-
         for company in company_list:
-
-            duration = companies[company]["duration"]
 
             rounds = companies[company]["rounds"]
 
@@ -102,96 +103,153 @@ def schedule_interviews(
                 rounds + 1
             ):
 
-                scheduled = False
+                pending.append({
 
-                current_time = previous_end
+                    "student": student,
 
-                while (
-                    current_time + duration
-                    <= slot_end
+                    "company": company,
+
+                    "round": round_no
+                })
+
+    # -------------------------
+    # Student availability
+    # -------------------------
+
+    student_next_available = {}
+
+    for student in students:
+
+        student_next_available[
+            student
+        ] = slot_start
+
+    # -------------------------
+    # Fair Scheduling Loop
+    # -------------------------
+
+    while pending:
+
+        pending.sort(
+
+            key=lambda interview:
+
+            student_next_available[
+                interview["student"]
+            ]
+        )
+
+        task = pending.pop(0)
+
+        student = task["student"]
+
+        company = task["company"]
+
+        round_no = task["round"]
+
+        duration = companies[
+            company
+        ]["duration"]
+
+        current_time = (
+            student_next_available[
+                student
+            ]
+        )
+
+        scheduled = False
+
+        while (
+            current_time + duration
+            <= slot_end
+        ):
+
+            start = current_time
+
+            end = (
+                current_time
+                + duration
+            )
+
+            for panel in range(
+                1,
+                companies[company]["panels"] + 1
+            ):
+
+                if (
+
+                    student_free(
+                        student,
+                        start,
+                        end,
+                        schedule,
+                        break_time
+                    )
+
+                    and
+
+                    panel_free(
+                        company,
+                        panel,
+                        start,
+                        end,
+                        panel_usage
+                    )
                 ):
 
-                    start = current_time
+                    interview = {
 
-                    end = (
-                        current_time
-                        + duration
+                        "student": student,
+
+                        "company": company,
+
+                        "round": round_no,
+
+                        "start": start,
+
+                        "end": end,
+
+                        "panel": panel
+                    }
+
+                    schedule.append(
+                        interview
                     )
 
-                    for panel in range(
-                        1,
-                        companies[company]["panels"] + 1
-                    ):
-
-                        if (
-                            student_free(
-                                student,
-                                start,
-                                end,
-                                schedule,
-                                break_time
-                            )
-                            and
-                            panel_free(
-                                company,
-                                panel,
-                                start,
-                                end,
-                                panel_usage
-                            )
-                        ):
-
-                            interview = {
-
-                                "student": student,
-
-                                "company": company,
-
-                                "round": round_no,
-
-                                "start": start,
-
-                                "end": end,
-
-                                "panel": panel
-                            }
-
-                            schedule.append(
-                                interview
-                            )
-
-                            panel_usage[
-                                company
-                            ][panel].append(
-                                interview
-                            )
-
-                            previous_end = (
-                                end
-                                + break_time
-                            )
-
-                            scheduled = True
-
-                            break
-
-                    if scheduled:
-                        break
-
-                    current_time += 5
-
-                if not scheduled:
-
-                    conflicts.append(
-                        {
-                            "student": student,
-                            "company": company,
-                            "round": round_no,
-                            "reason":
-                            "No available slot"
-                        }
+                    panel_usage[
+                        company
+                    ][panel].append(
+                        interview
                     )
+
+                    student_next_available[
+                        student
+                    ] = (
+                        end
+                        + break_time
+                    )
+
+                    scheduled = True
 
                     break
+
+            if scheduled:
+                break
+
+            current_time += 5
+
+        if not scheduled:
+
+            conflicts.append({
+
+                "student": student,
+
+                "company": company,
+
+                "round": round_no,
+
+                "reason":
+                "No available slot"
+            })
 
     return schedule, conflicts
