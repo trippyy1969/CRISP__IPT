@@ -1,3 +1,5 @@
-PASS
-PASS
-PASS
+TC1 Basic Scheduling          PASS
+
+TC2 Panel Limitation          PASS
+
+TC3 Conflict Detection        PASS
