@@ -17,6 +17,8 @@ from exporter import (
     export_conflicts
 )
 
+from validator import validate_all
+
 def to_time(minutes):
 
     hour = minutes // 60
@@ -37,6 +39,24 @@ slot_start, slot_end = (
     get_time_window()
 )
 
+try:
+
+    validate_all(
+        students,
+        companies,
+        slot_start,
+        slot_end
+    )
+
+except ValueError as error:
+
+    print()
+
+    print("INPUT ERROR")
+
+    print(error)
+
+    exit()
 
 schedule, conflicts = (
     schedule_interviews(
