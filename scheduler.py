@@ -69,12 +69,10 @@ def schedule_interviews(
 ):
 
     schedule = []
-
     conflicts = []
 
     panel_usage = {}
 
-    # create panel calendars
     for company, details in companies.items():
 
         panel_usage[company] = {}
@@ -83,12 +81,21 @@ def schedule_interviews(
             1,
             details["panels"] + 1
         ):
-
             panel_usage[company][panel] = []
 
-    # -------------------------
-    # Create interview queue
-    # -------------------------
+    # --------------------------
+    # Student availability
+    # --------------------------
+
+    student_next_available = {}
+
+    for student in students:
+        student_next_available[student] = slot_start
+
+    # --------------------------
+    # Create initial queue
+    # ONLY ROUND 1
+    # --------------------------
 
     pending = []
 
@@ -96,55 +103,31 @@ def schedule_interviews(
 
         for company in company_list:
 
-            rounds = companies[company]["rounds"]
+            pending.append({
 
-            for round_no in range(
-                1,
-                rounds + 1
-            ):
+                "student": student,
+                "company": company,
+                "round": 1
 
-                pending.append({
+            })
 
-                    "student": student,
-
-                    "company": company,
-
-                    "round": round_no
-                })
-
-    # -------------------------
-    # Student availability
-    # -------------------------
-
-    student_next_available = {}
-
-    for student in students:
-
-        student_next_available[
-            student
-        ] = slot_start
-
-    # -------------------------
-    # Fair Scheduling Loop
-    # -------------------------
+    # --------------------------
+    # Main loop
+    # --------------------------
 
     while pending:
 
         pending.sort(
-
-            key=lambda interview:
-
+            key=lambda x:
             student_next_available[
-                interview["student"]
+                x["student"]
             ]
         )
 
         task = pending.pop(0)
 
         student = task["student"]
-
         company = task["company"]
-
         round_no = task["round"]
 
         duration = companies[
@@ -165,15 +148,15 @@ def schedule_interviews(
         ):
 
             start = current_time
-
-            end = (
-                current_time
-                + duration
-            )
+            end = current_time + duration
 
             for panel in range(
+
                 1,
-                companies[company]["panels"] + 1
+
+                companies[
+                    company
+                ]["panels"] + 1
             ):
 
                 if (
@@ -195,6 +178,7 @@ def schedule_interviews(
                         end,
                         panel_usage
                     )
+
                 ):
 
                     interview = {
@@ -231,6 +215,28 @@ def schedule_interviews(
 
                     scheduled = True
 
+                    # ------------------
+                    # Unlock next round
+                    # ------------------
+
+                    total_rounds = (
+                        companies[
+                            company
+                        ]["rounds"]
+                    )
+
+                    if round_no < total_rounds:
+
+                        pending.append({
+
+                            "student": student,
+
+                            "company": company,
+
+                            "round": round_no + 1
+
+                        })
+
                     break
 
             if scheduled:
@@ -250,6 +256,7 @@ def schedule_interviews(
 
                 "reason":
                 "No available slot"
+
             })
 
     return schedule, conflicts
