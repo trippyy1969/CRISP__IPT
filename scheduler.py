@@ -1,4 +1,4 @@
-# scheduler.py
+# sched# scheduler.py
 
 
 def overlap(start1, end1, start2, end2):
@@ -93,8 +93,8 @@ def schedule_interviews(
         student_next_available[student] = slot_start
 
     # --------------------------
-    # Create initial queue
-    # ONLY ROUND 1
+    # Initial Queue
+    # Only Round 1
     # --------------------------
 
     pending = []
@@ -112,7 +112,7 @@ def schedule_interviews(
             })
 
     # --------------------------
-    # Main loop
+    # Main Scheduling Loop
     # --------------------------
 
     while pending:
@@ -142,6 +142,9 @@ def schedule_interviews(
 
         scheduled = False
 
+        # New variable
+        last_reason = "No available slot"
+
         while (
             current_time + duration
             <= slot_end
@@ -157,28 +160,29 @@ def schedule_interviews(
                 companies[
                     company
                 ]["panels"] + 1
+
             ):
 
+                student_is_free = student_free(
+                    student,
+                    start,
+                    end,
+                    schedule,
+                    break_time
+                )
+
+                panel_is_free = panel_free(
+                    company,
+                    panel,
+                    start,
+                    end,
+                    panel_usage
+                )
+
                 if (
-
-                    student_free(
-                        student,
-                        start,
-                        end,
-                        schedule,
-                        break_time
-                    )
-
+                    student_is_free
                     and
-
-                    panel_free(
-                        company,
-                        panel,
-                        start,
-                        end,
-                        panel_usage
-                    )
-
+                    panel_is_free
                 ):
 
                     interview = {
@@ -194,6 +198,7 @@ def schedule_interviews(
                         "end": end,
 
                         "panel": panel
+
                     }
 
                     schedule.append(
@@ -215,14 +220,14 @@ def schedule_interviews(
 
                     scheduled = True
 
-                    # ------------------
                     # Unlock next round
-                    # ------------------
 
                     total_rounds = (
+
                         companies[
                             company
                         ]["rounds"]
+
                     )
 
                     if round_no < total_rounds:
@@ -239,12 +244,35 @@ def schedule_interviews(
 
                     break
 
+                elif not student_is_free:
+
+                    last_reason = (
+                        "Student unavailable"
+                    )
+
+                elif not panel_is_free:
+
+                    last_reason = (
+                        "Panel capacity exhausted"
+                    )
+
             if scheduled:
                 break
 
             current_time += 5
 
+        # Could not schedule
+
         if not scheduled:
+
+            if (
+                current_time + duration
+                > slot_end
+            ):
+
+                last_reason = (
+                    "Insufficient remaining time"
+                )
 
             conflicts.append({
 
@@ -254,8 +282,7 @@ def schedule_interviews(
 
                 "round": round_no,
 
-                "reason":
-                "No available slot"
+                "reason": last_reason
 
             })
 
