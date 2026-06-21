@@ -12,6 +12,10 @@ from scheduler import (
     schedule_interviews
 )
 
+from exporter import (
+    export_schedule,
+    export_conflicts
+)
 
 def to_time(minutes):
 
@@ -44,6 +48,9 @@ schedule, conflicts = (
     )
 )
 
+export_schedule(schedule)
+
+export_conflicts(conflicts)
 
 print("\n===== SCHEDULE =====\n")
 
