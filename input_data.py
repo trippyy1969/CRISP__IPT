@@ -1,37 +1,71 @@
-# input_data.py
+import csv
 
 BREAK_TIME = 5
 
 
 def get_students():
 
-    return {
-        "101": ["A", "B"],
-        "102": ["A"],
-        "103": ["B"]
-    }
+    students = {}
+
+    with open(
+        "students.csv",
+        mode="r"
+    ) as file:
+
+        reader = csv.DictReader(file)
+
+        for row in reader:
+
+            student_id = row["student_id"]
+
+            companies = (
+                row["companies"]
+                .split(";")
+            )
+
+            students[
+                student_id
+            ] = companies
+
+    return students
 
 
 def get_companies():
 
-    return {
-        "A": {
-            "duration": 30,
-            "rounds": 2,
-            "panels": 2
-        },
+    companies = {}
 
-        "B": {
-            "duration": 45,
-            "rounds": 1,
-            "panels": 1
-        }
-    }
+    with open(
+        "companies.csv",
+        mode="r"
+    ) as file:
+
+        reader = csv.DictReader(file)
+
+        for row in reader:
+
+            companies[
+                row["company"]
+            ] = {
+
+                "duration":
+                int(
+                    row["duration"]
+                ),
+
+                "rounds":
+                int(
+                    row["rounds"]
+                ),
+
+                "panels":
+                int(
+                    row["panels"]
+                )
+            }
+
+    return companies
 
 
 def get_time_window():
 
-    slot_start = 540   # 9:00 AM
-    slot_end = 720     # 12:00 PM
-
-    return slot_start, slot_end
+    return 540, 720
