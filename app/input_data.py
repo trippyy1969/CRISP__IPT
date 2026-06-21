@@ -8,7 +8,7 @@ def get_students():
     students = {}
 
     with open(
-        "students.csv",
+        "data/students.csv" ,
         mode="r"
     ) as file:
 
@@ -35,7 +35,7 @@ def get_companies():
     companies = {}
 
     with open(
-        "companies.csv",
+        "data/companies.csv",
         mode="r"
     ) as file:
 

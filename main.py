@@ -1,14 +1,14 @@
 # main.py
 
 
-from input_data import (
+from app.input_data import (
     get_students,
     get_companies,
     get_time_window,
     BREAK_TIME
 )
 
-from scheduler import (
+from app.scheduler import (
     schedule_interviews
 )
 
@@ -17,7 +17,7 @@ from exporter import (
     export_conflicts
 )
 
-from validator import validate_all
+from app.validator import validate_all
 
 def to_time(minutes):
 
