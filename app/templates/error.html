@@ -2,18 +2,63 @@
 <html>
 
 <head>
-    <title>Error</title>
+
+    <title>
+        Invalid Input
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
 </head>
 
 <body>
 
-    <h1>Invalid Input</h1>
+<div class="container">
 
-    <p>{{ message }}</p>
+    <div class="header">
 
-    <a href="/">
-        Go Back
-    </a>
+        <h1>
+            Input Validation Failed
+        </h1>
+
+    </div>
+
+    <div class="section">
+
+        <h2 class="section-title">
+            Error Details
+        </h2>
+
+        <p
+            style="
+            color:#dc2626;
+            font-size:18px;
+            font-weight:bold;
+            "
+        >
+
+            {{ message }}
+
+        </p>
+
+        <br>
+
+        <a href="/">
+
+            <button class="action-btn">
+
+                Back To Upload Page
+
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
 
 </body>
 

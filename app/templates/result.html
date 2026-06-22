@@ -2,87 +2,157 @@
 <html>
 
 <head>
-    <title>Schedule</title>
+
+    <title>
+        Interview Schedule
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
 </head>
 
 <body>
 
-<h1>Schedule</h1>
+<div class="container">
 
-<table border="1">
+    <div class="header">
 
-<tr>
-    <th>Student</th>
-    <th>Company</th>
-    <th>Round</th>
-    <th>Start</th>
-    <th>End</th>
-    <th>Panel</th>
-</tr>
+        <h1>
+            Campus Recruitment Scheduler
+        </h1>
 
-{% for interview in schedule %}
+        <br>
 
-<tr>
+        <span class="badge">
+            Generated Successfully
+        </span>
 
-    <td>{{ interview.student }}</td>
+    </div>
 
-    <td>{{ interview.company }}</td>
+    <div class="section">
 
-    <td>{{ interview.round }}</td>
+        <h2 class="section-title">
+            Interview Schedule
+        </h2>
 
-    <td>{{ interview.start_time }}</td>
+        <table>
 
-    <td>{{ interview.end_time }}</td>
+            <tr>
 
-    <td>{{ interview.panel }}</td>
+                <th>Student</th>
 
-</tr>
+                <th>Company</th>
 
-{% endfor %}
+                <th>Round</th>
 
-</table>
+                <th>Start</th>
 
-<br>
+                <th>End</th>
 
-<h1>Conflicts</h1>
+                <th>Panel</th>
 
-<table border="1">
+            </tr>
 
-<tr>
-    <th>Student</th>
-    <th>Company</th>
-    <th>Round</th>
-    <th>Reason</th>
-</tr>
+            {% for interview in schedule %}
 
-{% for conflict in conflicts %}
+            <tr>
 
-<tr>
+                <td>{{ interview.student }}</td>
 
-    <td>{{ conflict.student }}</td>
+                <td>{{ interview.company }}</td>
 
-    <td>{{ conflict.company }}</td>
+                <td>{{ interview.round }}</td>
 
-    <td>{{ conflict.round }}</td>
+                <td>{{ interview.start_time }}</td>
 
-    <td>{{ conflict.reason }}</td>
+                <td>{{ interview.end_time }}</td>
 
-</tr>
+                <td>{{ interview.panel }}</td>
 
-{% endfor %}
+            </tr>
 
-</table>
+            {% endfor %}
 
-<a href="/download">
+        </table>
 
-    <button>
-        Download Schedule CSV
-    </button>
+    </div>
 
-</a>
+    <div class="section">
 
-<br><br>
+        <h2 class="section-title">
+            Conflict Dashboard
+        </h2>
 
+        {% if conflicts %}
+
+        <table>
+
+            <tr>
+
+                <th>Student</th>
+
+                <th>Company</th>
+
+                <th>Round</th>
+
+                <th>Reason</th>
+
+            </tr>
+
+            {% for conflict in conflicts %}
+
+            <tr class="conflict-row">
+
+                <td>{{ conflict.student }}</td>
+
+                <td>{{ conflict.company }}</td>
+
+                <td>{{ conflict.round }}</td>
+
+                <td>{{ conflict.reason }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        {% else %}
+
+        <p class="success">
+
+            ✅ No scheduling conflicts detected
+
+        </p>
+
+        {% endif %}
+
+    </div>
+
+    <a
+        href="/download"
+        class="download-btn"
+    >
+
+        <button>
+
+            Download Schedule CSV
+
+        </button>
+
+    </a>
+
+    <div class="footer">
+
+        Campus Recruitment Interview Scheduling Platform
+
+    </div>
+
+</div>
 
 </body>
+
 </html>

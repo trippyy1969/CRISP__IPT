@@ -1,44 +1,86 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Interview Scheduler</title>
+
+    <title>
+        Campus Recruitment Scheduler
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
 </head>
 
 <body>
 
-<h1>Campus Recruitment Scheduler</h1>
+<div class="container">
 
-<form
-    action="/generate"
-    method="POST"
-    enctype="multipart/form-data"
->
+    <div class="header">
 
-    <p>Students CSV</p>
+        <h1>
+            Campus Recruitment Scheduler
+        </h1>
 
-    <input
-        type="file"
-        name="students_file"
-        required
-    >
+        <br>
 
-    <br><br>
+        <span class="badge">
+            Upload Interview Data
+        </span>
 
-    <p>Companies CSV</p>
+    </div>
 
-    <input
-        type="file"
-        name="companies_file"
-        required
-    >
+    <div class="section">
 
-    <br><br>
+        <h2 class="section-title">
+            Upload CSV Files
+        </h2>
 
-    <button type="submit">
-        Generate Schedule
-    </button>
+        <form
+            action="/generate"
+            method="POST"
+            enctype="multipart/form-data"
+        >
 
-</form>
+            <p>
+                Students CSV
+            </p>
+
+            <input
+                type="file"
+                name="students_file"
+                required
+            >
+
+            <br><br>
+
+            <p>
+                Companies CSV
+            </p>
+
+            <input
+                type="file"
+                name="companies_file"
+                required
+            >
+
+            <br><br>
+
+            <button
+                type="submit"
+                class="action-btn"
+            >
+                Generate Schedule
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
+
 </html>

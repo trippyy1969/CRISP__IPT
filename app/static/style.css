@@ -1,0 +1,123 @@
+body{
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background:#f5f7fb;
+    margin:0;
+    padding:30px;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.header{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    margin-bottom:25px;
+}
+
+.header h1{
+    margin:0;
+    color:#1f2937;
+}
+
+.section{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    margin-bottom:25px;
+}
+
+.section-title{
+    color:#1f2937;
+    margin-bottom:15px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th{
+    background:#2563eb;
+    color:white;
+    padding:14px;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #e5e7eb;
+    text-align:center;
+}
+
+tr:hover{
+    background:#f3f4f6;
+}
+
+.conflict-row{
+    background:#ffe5e5;
+}
+
+.conflict-row:hover{
+    background:#ffd6d6;
+}
+
+.success{
+    color:#16a34a;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.download-btn{
+    display:inline-block;
+    text-decoration:none;
+}
+
+.download-btn button{
+    background:#16a34a;
+    color:white;
+    border:none;
+    padding:12px 22px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+    transition:0.3s;
+}
+
+.download-btn button:hover{
+    background:#15803d;
+}
+
+.badge{
+    background:#dbeafe;
+    color:#1d4ed8;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.footer{
+    text-align:center;
+    margin-top:25px;
+    color:#6b7280;
+}
+
+.action-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 22px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+    transition:0.3s;
+}
+
+.action-btn:hover{
+    background:#1d4ed8;
+}
