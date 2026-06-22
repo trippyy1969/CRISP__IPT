@@ -1,5 +1,72 @@
-TC1 Basic Scheduling          PASS
+Campus Recruitment Interview Scheduling Platform
 
-TC2 Panel Limitation          PASS
+TEST REPORT
 
-TC3 Conflict Detection        PASS
+TC1: Basic Scheduling
+Input:
+
+* 2 students
+* Different companies
+  Result:
+  PASS
+
+TC2: Panel Capacity Constraint
+Input:
+
+* 3 students
+* Company A
+* 2 panels
+  Result:
+  PASS
+
+TC3: Conflict Detection
+Input:
+
+* 1 student
+* 3 companies
+* Insufficient slot duration
+  Result:
+  PASS
+
+TC4: Round Precedence
+Input:
+
+* Company with multiple rounds
+  Result:
+  PASS
+
+TC5: Fair Scheduling (Round Robin)
+Input:
+
+* Multiple students
+* Multiple companies
+  Result:
+  PASS
+
+TC6: Minimum Break Enforcement
+Input:
+
+* 5 minute break configured
+  Result:
+  PASS
+
+TC7: Invalid Duration
+Input:
+
+* Negative duration
+  Result:
+  PASS
+
+TC8: Invalid Panels
+Input:
+
+* Zero panels
+  Result:
+  PASS
+
+TC9: Invalid Student Mapping
+Input:
+
+* Student references unknown company
+  Result:
+  PASS
