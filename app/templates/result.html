@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Schedule</title>
+</head>
+
+<body>
+
+<h1>Schedule</h1>
+
+<table border="1">
+
+<tr>
+    <th>Student</th>
+    <th>Company</th>
+    <th>Round</th>
+    <th>Start</th>
+    <th>End</th>
+    <th>Panel</th>
+</tr>
+
+{% for interview in schedule %}
+
+<tr>
+
+    <td>{{ interview.student }}</td>
+
+    <td>{{ interview.company }}</td>
+
+    <td>{{ interview.round }}</td>
+
+    <td>{{ interview.start_time }}</td>
+
+    <td>{{ interview.end_time }}</td>
+
+    <td>{{ interview.panel }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<h1>Conflicts</h1>
+
+<table border="1">
+
+<tr>
+    <th>Student</th>
+    <th>Company</th>
+    <th>Round</th>
+    <th>Reason</th>
+</tr>
+
+{% for conflict in conflicts %}
+
+<tr>
+
+    <td>{{ conflict.student }}</td>
+
+    <td>{{ conflict.company }}</td>
+
+    <td>{{ conflict.round }}</td>
+
+    <td>{{ conflict.reason }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<a href="/download">
+
+    <button>
+        Download Schedule CSV
+    </button>
+
+</a>
+
+<br><br>
+
+
+</body>
+</html>

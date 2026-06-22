@@ -12,14 +12,13 @@ def to_time(minutes):
 def export_schedule(schedule):
 
     with open(
-        data/schedule.csv,
+        "data/schedule.csv",
         mode="w",
         newline=""
     ) as file:
 
         writer = csv.writer(file)
 
-        # Header
         writer.writerow([
             "student",
             "company",
@@ -29,7 +28,6 @@ def export_schedule(schedule):
             "panel"
         ])
 
-        # Schedule rows
         for interview in schedule:
 
             writer.writerow([
@@ -40,18 +38,13 @@ def export_schedule(schedule):
 
                 interview["round"],
 
-                to_time(
-                    interview["start"]
-                ),
+                interview["start"],
 
-                to_time(
-                    interview["end"]
-                ),
+                interview["end"],
 
                 interview["panel"]
 
             ])
-
 
 def export_conflicts(conflicts):
 
