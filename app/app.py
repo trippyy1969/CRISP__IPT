@@ -31,6 +31,10 @@ from exporter import (
     export_schedule
 )
 
+from validator import (
+    validate_all
+)
+
 app = Flask(__name__)
 
 def to_time(minutes):
@@ -78,6 +82,22 @@ def generate():
     slot_start, slot_end = (
         get_time_window()
     )
+
+    try:
+
+       validate_all(
+           students,
+           companies,
+           slot_start,
+           slot_end
+       )
+
+    except ValueError as e:
+
+        return render_template(
+            "error.html",
+            message=str(e)
+        )
 
     schedule, conflicts = (
         schedule_interviews(
