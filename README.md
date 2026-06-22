@@ -124,6 +124,27 @@ Open:
 http://127.0.0.1:5000
 ```
 
+## Docker Deployment
+
+Build and start the application:
+
+```bash
+docker compose up --build
+```
+
+The application will be available at:
+
+```text
+http://localhost:5000
+```
+
+Stop the application:
+
+```bash
+docker compose down
+```
+
+
 ---
 
 ## Running Tests
